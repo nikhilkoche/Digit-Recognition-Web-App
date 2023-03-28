@@ -1,4 +1,4 @@
-def process_image(img):
+def process_image(image):
     import cv2
     import numpy as np
     from tensorflow import keras
@@ -7,7 +7,7 @@ def process_image(img):
     model = keras.models.load_model('2nd.h5')
 
     # Load image and convert to grayscale(should be in same dir as this file)
-    image = cv2.imread(img)
+    # image = cv2.imread(img)
 
     # converting the color space from BGR to grayscale
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -31,7 +31,6 @@ def process_image(img):
     # 7----The threshold() function returns two values: the threshold value used, and the binary image.
     # In this line of code, the first value is assigned to _ (which is a convention to indicate that the value is not used),
     # and the second value is assigned to the variable binary.
-
 
     _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 
@@ -79,8 +78,8 @@ def process_image(img):
         cv2.putText(image, str(digit_class), (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
     # Show image with predicted digits and bounding boxes
-    cv2.imshow('image', image)
-    cv2.imwrite('image_processed.jog',image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imshow('image', image)
+    cv2.imwrite('static/image_processed.jpg', image)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
     return 'image_processed.jpg'
