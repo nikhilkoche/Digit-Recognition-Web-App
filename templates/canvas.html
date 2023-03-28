@@ -14,13 +14,19 @@
 
 <canvas id="canvas" width="280" height="280"></canvas>
 <br>
-    <button onclick="recognizeDigit()">Recognize</button> <button onclick="location.reload()">Clear Canvas</button>
-<div id="preview" ></div>
+<button onclick="recognizeDigit()">Recognize</button>
+<button onclick="location.reload()">Clear Canvas</button>
+<div id="preview"></div>
 <script>
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
     ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Set the line color
+    ctx.strokeStyle = "black";
+
+    // Set the line width
+    ctx.lineWidth = 5;
     var drawing = false;
     var lastX, lastY;
     canvas.addEventListener('mousedown', function (e) {
