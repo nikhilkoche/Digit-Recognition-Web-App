@@ -7,9 +7,13 @@ This is a web app that uses a pre-trained MNIST model to recognize handwritten d
 Before you can run this web app, you need to have the following software installed on your system:
 
 +Python 3.x
+
 +Flask
+
 +OpenCV
+
 +TensorFlow
+
 +Numpy
 
 You can install these dependencies using pip by running the following command in your terminal:
@@ -25,8 +29,11 @@ pip install -r requirements.txt
 5.The results page will display the uploaded image with bounding boxes around any recognized digits.
 ### Built With 
 -Python
+
 -Flask
+
 -TensorFlow
+
 -OpenCV
 
 ### Acknowledgments
