@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digit Recognizer</title>
+    <style>
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Digit Recognizer</h1>
+    <p>Draw a digit in the canvas below and click "Recognize" to see if the model can recognize it:</p>
+    <canvas id="canvas" width="280" height="280"></canvas>
+    <br>
+    <button onclick="recognizeDigit()">Recognize</button>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var drawing = false;
+        var lastX, lastY;
+        canvas.addEventListener('mousedown', function(e) {
+            lastX = e.offsetX;
+            lastY = e.offsetY;
+            drawing = true;
+        });
+        canvas.addEventListener('mousemove', function(e) {
+            if (drawing) {
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+                lastX = e.offsetX;
+                lastY = e.offsetY;
+            }
+        });
+        canvas.addEventListener('mouseup', function(e) {
+            drawing = false;
+        });
+        function recognizeDigit() {
+            // TODO: Send the canvas image to the machine learning model and display the result
+        }
+    </script>
+</body>
+</html>
