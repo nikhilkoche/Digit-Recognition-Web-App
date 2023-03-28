@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Image</title>
+    <script>
+        function previewImage(event) {
+            var preview = document.getElementById('preview');
+            preview.src = URL.createObjectURL(event.target.files[0]);
+            preview.style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    <h1>DIGIT RECOGNIZER</h1>
+    <p>Please upload your image file</p>
+    <form action="/submit-image" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" onchange="previewImage(event)">
+        <br>
+        <img id="preview" style="display:none;width:200px;height:200px;">
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
