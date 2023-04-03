@@ -1,69 +1,114 @@
 <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Digit Recognizer</title>
-    <style>
-        #canvas {
-            border: 1px solid black;
-        }
-    </style>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <title>Digit Recognizer Project</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="static/assets/img/favicon.ico"/>
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="static/assets/css/styles.css" rel="stylesheet"/>
 </head>
-<body>
-<h1>Digit Recognizer</h1>
-<p>Draw a digit in the canvas below and click "Recognize" to see if the model can recognize it:</p>
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" target="_blank" href="https://durhamcollege.ca/"><img src="static/assets/img/dc.png"
+                                                                                      alt="..."/></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/image2digits#upload">Upload Image</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/canvas#draw">Draw Digit</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-subheading" style="color:#ffc800"></div>
+        <div class="masthead-heading text-uppercase" style="color:#ffc800">DIGIT RECOGNIZER</div>
+        <a class="btn btn-primary btn-xl text-uppercase"
+           href="https://github.com/nikhilkoche/Digit-Recognition-Web-App">To the Github Repository</a>
+    </div>
+</header>
+<!-- Services-->
+<section class="page-section" id="draw">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <p>Draw a digit in the canvas below and click "Recognize" to see if the model can recognize it:</p>
+                <canvas id="canvas" width="280" height="280" style="border: 3px solid #ffc800"></canvas>
+                <br>
+                <button class="btn btn-primary" onclick="recognizeDigit()">Recognize</button>
+                <button class="btn btn-secondary" onclick="location.reload()">Clear Canvas</button>
+            </div>
+            <div class="col-md-6 col-12">
+                <div id="preview"></div>
+            </div>
+        </div>
 
-<canvas id="canvas" width="280" height="280"></canvas>
-<br>
-<button onclick="recognizeDigit()">Recognize</button>
-<button onclick="location.reload()">Clear Canvas</button>
-<div id="preview"></div>
-<script>
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#FFFFFF';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // Set the line color
-    ctx.strokeStyle = "black";
 
-    // Set the line width
-    ctx.lineWidth = 5;
-    var drawing = false;
-    var lastX, lastY;
-    canvas.addEventListener('mousedown', function (e) {
-        lastX = e.offsetX;
-        lastY = e.offsetY;
-        drawing = true;
-    });
-    canvas.addEventListener('mousemove', function (e) {
-        if (drawing) {
-            ctx.beginPath();
-            ctx.moveTo(lastX, lastY);
-            ctx.lineTo(e.offsetX, e.offsetY);
-            ctx.stroke();
-            lastX = e.offsetX;
-            lastY = e.offsetY;
-        }
-    });
-    canvas.addEventListener('mouseup', function (e) {
-        drawing = false;
-    });
+        <script>
+            var canvas = document.getElementById('canvas');
+            var ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Set the line color
+            ctx.strokeStyle = "black";
 
-    function recognizeDigit() {
-        // TODO: Send the canvas image to the machine learning model and display the result
-        var imageData = canvas.toDataURL();
+            // Set the line width
+            ctx.lineWidth = 5;
+            var drawing = false;
+            var lastX, lastY;
+            canvas.addEventListener('mousedown', function (e) {
+                lastX = e.offsetX;
+                lastY = e.offsetY;
+                drawing = true;
+            });
+            canvas.addEventListener('mousemove', function (e) {
+                if (drawing) {
+                    ctx.beginPath();
+                    ctx.moveTo(lastX, lastY);
+                    ctx.lineTo(e.offsetX, e.offsetY);
+                    ctx.stroke();
+                    lastX = e.offsetX;
+                    lastY = e.offsetY;
+                }
+            });
+            canvas.addEventListener('mouseup', function (e) {
+                drawing = false;
+            });
 
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '{{ url_for("submit_canvas") }}');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                console.log(xhr.responseText);
-                const contentElement = document.getElementById('preview');
-                contentElement.innerHTML = xhr.responseText;
+            function recognizeDigit() {
+                // TODO: Send the canvas image to the machine learning model and display the result
+                var imageData = canvas.toDataURL();
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '{{ url_for("submit_canvas") }}');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        console.log(xhr.responseText);
+                        const contentElement = document.getElementById('preview');
+                        contentElement.innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.send(JSON.stringify({image_data: imageData}));
             }
-        };
-        xhr.send(JSON.stringify({image_data: imageData}));
-    }
-</script>
+        </script>
 </body>
 </html>

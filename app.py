@@ -15,6 +15,12 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+# Route to display the web form
+@app.route('/image2digits')
+def image2difits():
+    return render_template('image2digits.html')
+
+
 @app.route('/canvas')
 def canvas():
     return render_template('canvas.html')
@@ -27,7 +33,7 @@ def submit():
     import numpy as np
     # Get the image file from the form
     img_file = request.files['image']
-    img =  img = cv2.imdecode(np.frombuffer(img_file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
+    img =  cv2.imdecode(np.frombuffer(img_file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
     result = process_image(img)
     # Send the image file to the API
     #api_url = 'https://api.example.com/image-classifier'
