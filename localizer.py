@@ -83,3 +83,5 @@ def process_image(image):
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
     return 'image_processed.jpg'
+    # Adding this comment to make a repository commit as part of the 
+    # Consulting AND Prof Communication assignment
